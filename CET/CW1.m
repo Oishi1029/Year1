@@ -158,13 +158,14 @@ hold on
 tx1_img = 0; ty1_img = -4; tz1_img = 2; 
 tx2_img = 0; ty2_img = 16; tz2_img = 2; 
 tx3_img = 0; ty3_img = -16; tz3_img = 2; 
-
+by1 = 0; by2 = 6; by3 = 0;% y-coordinate of the boundary interception point
 bz1 = 2; bz2 = 2; bz3 = 2;%boundary z-coordinate
+c1 = ty1_img; c2 = ty2_img; c3 = ty3_img;% y-intercept 
+
 epsilon_air = 1; % air
 epsilon_wall = 3; % wall
 snells_constant = sqrt(epsilon_wall/epsilon_air);
-c1 = ty1_img; c2 = ty2_img; c3 = ty3_img;% y-intercept 
-by1 = 6; by2 = 0; by3 = 6;% y-coordinate of the boundary interception point
+
 m3 = (ty3_img-ry)./(tx3_img-rxv); % gradient 
 bxv3 = (by3-c3)./m3; % vector x-coordinate of the boundary interception point
 m2 = (ty2_img-by3)./(tx2_img-bxv3); % gradient 
@@ -180,10 +181,12 @@ angle1v = acosd((d3v.^2+d4v.^2-d5v.^2)./(2*(d3v.*d4v))); % angle between the lin
 angle_incv = angle1v/2; % vector incident angle
 angle_tauv = asind(sind(angle_incv)./snells_constant); % tau angle
 tauv = (cosd(angle_incv)-snells_constant*cos(angle_tauv))./(cosd(angle_incv)+snells_constant*cos(angle_tauv));
-E3_upper = (1./(d1v+d2v+d3v+d4v)).*exp(-j*beta*(d1v+d2v+d3v+d4v));
+E3_lower = (1./(d1v+d2v+d3v+d4v)).*exp(-j*beta*(d1v+d2v+d3v+d4v));
 %Ef1_upper = 20*log10(abs(E1_upper));
-Etest = 20*log10(abs(Ed+E1_upper+E1_lower+E2_upper+E2_lower+E3_upper));
-plot(rxv,Etest,'k')
-hold on
+Etest = 20*log10(abs(Ed+E1_upper+E1_lower+E2_upper+E2_lower+E3_upper+E3_lower));
+plot(rxv,Etest,':')
+hold off
+
+%double check coordinates and formula
 
 
