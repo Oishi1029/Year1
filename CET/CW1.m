@@ -153,7 +153,7 @@ ty1_img = -4;
 ty2_img = 16; 
 ty3_img = -16; 
 C1 = ty1_img; C2 = ty2_img; C3 = ty3_img;% y-intercept 
-by1 = 6; by2 = 0; by3 = 6;% y-coordinate of the boundary interception point
+by1 = 0; by2 = 6; by3 = 0;% y-coordinate of the boundary interception point
 
 m3 = (ty3_img-ry)./(tx3_img-rxv); % gradient 
 bxv3 = (by3-C3)./m3; % vector x-coordinate of the boundary interception point
@@ -184,28 +184,120 @@ tau3 = (cosd(angle_inc3)-snells_constant*cosd(angle_trans3))./(cosd(angle_inc3)+
 
 E3_lower = (1./(d1+d2+d3+d4)).*exp(-j*beta*(d1+d2+d3+d4)).*tau1.*tau2.*tau3;
 
+%=========================Fourth Order Upper===============================%
+ty1_img = 8; 
+ty2_img = -8; 
+ty3_img = 20; 
+ty4_img = -20;
+C1 = ty1_img; C2 = ty2_img; C3 = ty3_img; C4 = ty4_img;% y-intercept 
+by1 = 6; by2 = 0; by3 = 6; by4 = 0;% y-coordinate of the boundary interception point
+
+m4 = (ty4_img - ry)./(tx4_img - rxv); % gradient 
+bxv4 = (by4-C4)./m4; % vector x-coordinate of the boundary interception point
+m3 = (ty3_img - by4)./(tx3_img - bxv4); % gradient 
+bxv3 = (by3-C3)./m3; % vector x-coordinate of the boundary interception point
+m2 = (ty2_img-by3)./(tx2_img-bxv3); % gradient 
+bxv2 = (by2-C2)./m2; % vector x-coordinate of the boundary interception point
+m1 = (ty1_img-by2)./(tx1_img-bxv2); % gradient 
+bxv1 = (by1-C1)./m1; % vector x-coordinate of the boundary interception point
+
+d1 = sqrt((bxv1-tx).^2+(by1-ty)^2+(bz1-tz)^2); % distance between boundary interception point and the transmitter
+d2 = sqrt((bxv1-bxv2).^2+(by1-by2)^2+(bz1-bz2)^2); % distance between boundary interception point and the receiver
+d3 = sqrt((bxv2-bxv3).^2+(by2-by3)^2+(bz2-bz3)^2); % distance between boundary interception point and the receiver
+d4 = sqrt((bxv3-bxv4).^2+(by3-by4)^2+(bz3-bz4)^2);
+d5 = sqrt((bxv4-rxv).^2+(by4-ry)^2+(bz4-rz)^2);
+dA = sqrt((bxv2-tx).^2+(by2-ty)^2+(bz2-tz)^2);
+dB = sqrt((bxv3-bxv1).^2+(by3-by1)^2+(bz3-bz1)^2);
+dC = sqrt((bxv2-bxv4).^2+(by2-by4)^2+(bz2-bz4)^2);
+dD = sqrt((bxv3-rxv).^2+(by3-ry)^2+(bz3-rz)^2);
+
+angle_inc1 = (acosd((d1.^2+d2.^2-dA.^2)./(2*(d1.*d2))))/2; % angle between the line d1 and d2
+angle_trans1 = asind(sind(angle_inc1)./snells_constant); % tau angle
+tau1 = (cosd(angle_inc1)-snells_constant*cosd(angle_trans1))./(cosd(angle_inc1)+snells_constant*cosd(angle_trans1));
+
+angle_inc2 = (acosd((d2.^2+d3.^2-dB.^2)./(2*(d2.*d3))))/2; % angle between the line d1 and d2
+angle_trans2 = asind(sind(angle_inc2)./snells_constant); % tau angle
+tau2 = (cosd(angle_inc2)-snells_constant*cosd(angle_trans2))./(cosd(angle_inc2)+snells_constant*cosd(angle_trans2));
+
+angle_inc3 = (acosd((d3.^2+d4.^2-dC.^2)./(2*(d3.*d4))))/2; % angle between the line d1 and d2
+angle_trans3 = asind(sind(angle_inc3)./snells_constant); % tau angle
+tau3 = (cosd(angle_inc3)-snells_constant*cosd(angle_trans3))./(cosd(angle_inc3)+snells_constant*cosd(angle_trans3));
+
+angle_inc4 = (acosd((d4.^2+d5.^2-dD.^2)./(2*(d4.*d5))))/2; % angle between the line d1 and d2
+angle_trans4 = asind(sind(angle_inc4)./snells_constant); % tau angle
+tau4 = (cosd(angle_inc4)-snells_constant*cosd(angle_trans4))./(cosd(angle_inc4)+snells_constant*cosd(angle_trans4));
+
+E4_upper = (1./(d1+d2+d3+d4+d5)).*exp(-j*beta*(d1+d2+d3+d4+d5)).*tau1.*tau2.*tau3.*tau4;
+
+%=========================Fourth Order Lower===============================%
+ty1_img = -4; 
+ty2_img = 16; 
+ty3_img = -16; 
+ty4_img = 28;
+C1 = ty1_img; C2 = ty2_img; C3 = ty3_img; C4 = ty4_img;% y-intercept 
+by1 = 0; by2 = 6; by3 = 0; by4 = 6;% y-coordinate of the boundary interception point
+
+m4 = (ty4_img - ry)./(tx4_img - rxv); % gradient 
+bxv4 = (by4-C4)./m4; % vector x-coordinate of the boundary interception point
+m3 = (ty3_img - by4)./(tx3_img - bxv4); % gradient 
+bxv3 = (by3-C3)./m3; % vector x-coordinate of the boundary interception point
+m2 = (ty2_img-by3)./(tx2_img-bxv3); % gradient 
+bxv2 = (by2-C2)./m2; % vector x-coordinate of the boundary interception point
+m1 = (ty1_img-by2)./(tx1_img-bxv2); % gradient 
+bxv1 = (by1-C1)./m1; % vector x-coordinate of the boundary interception point
+
+d1 = sqrt((bxv1-tx).^2+(by1-ty)^2+(bz1-tz)^2); % distance between boundary interception point and the transmitter
+d2 = sqrt((bxv1-bxv2).^2+(by1-by2)^2+(bz1-bz2)^2); % distance between boundary interception point and the receiver
+d3 = sqrt((bxv2-bxv3).^2+(by2-by3)^2+(bz2-bz3)^2); % distance between boundary interception point and the receiver
+d4 = sqrt((bxv3-bxv4).^2+(by3-by4)^2+(bz3-bz4)^2);
+d5 = sqrt((bxv4-rxv).^2+(by4-ry)^2+(bz4-rz)^2);
+dA = sqrt((bxv2-tx).^2+(by2-ty)^2+(bz2-tz)^2);
+dB = sqrt((bxv3-bxv1).^2+(by3-by1)^2+(bz3-bz1)^2);
+dC = sqrt((bxv2-bxv4).^2+(by2-by4)^2+(bz2-bz4)^2);
+dD = sqrt((bxv3-rxv).^2+(by3-ry)^2+(bz3-rz)^2);
+
+angle_inc1 = (acosd((d1.^2+d2.^2-dA.^2)./(2*(d1.*d2))))/2; % angle between the line d1 and d2
+angle_trans1 = asind(sind(angle_inc1)./snells_constant); % tau angle
+tau1 = (cosd(angle_inc1)-snells_constant*cosd(angle_trans1))./(cosd(angle_inc1)+snells_constant*cosd(angle_trans1));
+
+angle_inc2 = (acosd((d2.^2+d3.^2-dB.^2)./(2*(d2.*d3))))/2; % angle between the line d1 and d2
+angle_trans2 = asind(sind(angle_inc2)./snells_constant); % tau angle
+tau2 = (cosd(angle_inc2)-snells_constant*cosd(angle_trans2))./(cosd(angle_inc2)+snells_constant*cosd(angle_trans2));
+
+angle_inc3 = (acosd((d3.^2+d4.^2-dC.^2)./(2*(d3.*d4))))/2; % angle between the line d1 and d2
+angle_trans3 = asind(sind(angle_inc3)./snells_constant); % tau angle
+tau3 = (cosd(angle_inc3)-snells_constant*cosd(angle_trans3))./(cosd(angle_inc3)+snells_constant*cosd(angle_trans3));
+
+angle_inc4 = (acosd((d4.^2+d5.^2-dD.^2)./(2*(d4.*d5))))/2; % angle between the line d1 and d2
+angle_trans4 = asind(sind(angle_inc4)./snells_constant); % tau angle
+tau4 = (cosd(angle_inc4)-snells_constant*cosd(angle_trans4))./(cosd(angle_inc4)+snells_constant*cosd(angle_trans4));
+
+E4_lower = (1./(d1+d2+d3+d4+d5)).*exp(-j*beta*(d1+d2+d3+d4+d5)).*tau1.*tau2.*tau3.*tau4;
+
+
+
+
+
 %plot(rxv,Etest0)
 %hold on
 %Etest = 20*log10(abs(E3_lower));
-Etest0 = 20*log10(abs(Ed));
-plot(rxv,Etest0)
-hold on
-Etest1 = 20*log10(abs(Ed + E1_upper+E1_lower));
-plot(rxv,Etest1)
-hold on
-Etest2 = 20*log10(abs(Ed+E1_upper+E1_lower+E2_upper+E2_lower));
-plot(rxv,Etest2)
-hold on
-Etest3 = 20*log10(abs(Ed+E1_upper+E1_lower+E2_upper+E2_lower+E3_upper+E3_lower));
-plot(rxv,Etest3,':')
-hold off
-
-%plot(rxv,Etest)
+%Etest0 = 20*log10(abs(Ed));
+%plot(rxv,Etest0)
 %hold on
-%plot(rxv,Edf)
+%Etest1 = 20*log10(abs(Ed + E1_upper+E1_lower));
+%plot(rxv,Etest1)
 %hold on
+%Etest2 = 20*log10(abs(Ed+E1_upper+E1_lower+E2_upper+E2_lower));
 %plot(rxv,Etest2)
 %hold on
-%hold off
+Etest3 = 20*log10(abs(Ed+E1_upper+E1_lower+E2_upper+E2_lower+E3_upper+E3_lower));
+plot(rxv,Etest3,'r')
+hold on
+Etest4 = 20*log10(abs(Ed+E1_upper+E1_lower+E2_upper+E2_lower+E3_upper+E3_lower+E4_lower+E4_upper));
+plot(rxv,Etest4,'m')
+hold off
+
+
+
 %xlabel('Line Segment "pq"/m'), ylabel('E-field/dB'), title("LOS");
 %legend("LOS");
