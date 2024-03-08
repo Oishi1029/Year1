@@ -320,32 +320,33 @@ end
 
 function plotVariationGraph(rxv, f, ET0, ET1, ET2, ET3, ET4)
     
-    % create figure
+    % to create figure
     figure
     
-    % plot LOS 
-    %plot(rxv,ET0,'b--')
+    % to plot LOS 
+    plot(rxv,ET0,'b--')
 
-    %retain figure
-    %hold on
+    %to retain figure
+    hold on
     
-    % plot LOS + 1st ref
-    %plot(rxv,ET1,'m--')
+    % to plot LOS + 1st ref
+    plot(rxv,ET1,'m--')
 
-    % plot LOS + 1st ref + 2nd ref
-    %plot(rxv,ET2,'k--')
+    % to plot LOS + 1st ref + 2nd ref
+    plot(rxv,ET2,'k--')
 
-    % plot LOS + 1st ref + 2nd ref + 3rd ref
-    %plot(rxv,ET3,'g--')
+    % to plot LOS + 1st ref + 2nd ref + 3rd ref
+    plot(rxv,ET3,'g--')
 
-    % plot LOS + 1st ref + 2nd ref + 3rd ref + 4th ref
+    % to plot LOS + 1st ref + 2nd ref + 3rd ref + 4th ref
     plot(rxv,ET4, 'r-')
     
-    %turn of re
+    %to turn off retain figure
     hold off
 
-    %legend("ET0","ET1","ET2","ET3","ET4")
-    legend("ET4")
+    %to label each E-field summation
+    legend("ET0","ET1","ET2","ET3","ET4")
+    
 
     if f == 2.4*10^9
         title('Variation of signal strength of 2.4 GHz E-field')
